@@ -6,6 +6,7 @@ const mongoose = require("mongoose");
 const BlogSchema = require("./src/models/crmModel");
 const blogModel = mongoose.model("blog", BlogSchema);
 const bodyParser = require("body-parser");
+
 // mongoose connect
 mongoose.connect("mongodb://localhost/blog", {
 	useNewUrlParser: true,
