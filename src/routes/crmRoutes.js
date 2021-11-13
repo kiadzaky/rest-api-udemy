@@ -1,17 +1,15 @@
-const routes = (app) => {
-	app
-		.route("/")
-		.get((req, res) => {
-			res.send(`GET METHOD`);
-		})
-		.post((req, res) => {
-			res.send(`POST METHOD`);
-		})
-		.put((req, res) => {
-			res.send(`PUT METHOD`);
-		})
-		.delete((req, res) => {
-			res.send(`DELETE METHOD`);
-		});
-};
-module.exports = routes;
+const express = require('express');
+const router = express.Router();
+
+// import handler yang sudah kita buat tadi
+const crmController = require('../controllers/crmController');
+
+router.route('/').get(crmController.getAll).post(crmController.create);
+
+router
+	.route('/:id')
+	.get(crmController.getOne)
+	.put(crmController.update)
+	.delete(crmController.delete);
+
+module.exports = router;

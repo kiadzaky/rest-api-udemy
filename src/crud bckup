@@ -1,0 +1,65 @@
+// POST
+app.post('/newBlog', (req, res) => {
+	let blog = new blogModel(req.body);
+	blog.save((err, blogModel) => {
+		if (err) {
+			res.send(err);
+		}
+		res.json(blog);
+	});
+});
+
+//GET
+// app.get('/', (req, res) => {
+// 	blogModel.find({}, (err, blog) => {
+// 		if (err) {
+// 			res.send(err);
+// 		} else {
+// 			res.json(blog);
+// 		}
+// 	});
+// });
+
+//GET By ID
+
+app.get(`/:blogId`, (req, res) => {
+	// blogModel.findById(
+	// 	(req.params.blogId,
+	// 	(err, blog) => {
+	// 		if (err) {
+	// 			res.send(err);
+	// 		}
+	// 		res.json(blog);
+	// 	})
+	// );
+	/// tutorial sprti diatas tpi gagal
+	blogModel.find({ _id: req.params.blogId }, (err, blog) => {
+		res.json(blog);
+	});
+});
+
+let updateBlog = (req, res) => {
+	blogModel.findOneAndUpdate(
+		{ _id: req.params.blogId },
+		req.body,
+		{ new: true },
+		(err, updateBlog) => {
+			if (err) {
+				res.send(err);
+			}
+			res.json(updateBlog);
+		}
+	);
+};
+
+app.put('/:blogId', updateBlog);
+
+let deleteBlog = (req, res) => {
+	blogModel.findOneAndDelete({ _id: req.params.blogId }, (err, deleteBlog) => {
+		if (err) {
+			res.send(err);
+		}
+		res.json({ message: 'Berhasil Dihapus' });
+	});
+};
+app.delete('/delete/:blogId', deleteBlog);
